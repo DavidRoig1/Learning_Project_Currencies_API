@@ -1,4 +1,4 @@
-﻿namespace PruebaTecnicaVueling.Models
+﻿namespace Currencies_API.Models
 {
     public class TransactionsSku
     {

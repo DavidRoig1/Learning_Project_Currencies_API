@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApiCaller\ApiCaller.csproj" />
-    <ProjectReference Include="..\PruebaTecnicaVueling\Currencies_API.csproj" />
+    <ProjectReference Include="..\Currencies_API\Currencies_API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

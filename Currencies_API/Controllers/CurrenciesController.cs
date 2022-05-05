@@ -1,37 +1,37 @@
 ﻿using ApiCaller;
 using DataSource;
 using Microsoft.AspNetCore.Mvc;
-using PruebaTecnicaVueling.DataSource;
-using PruebaTecnicaVueling.Domain;
-using PruebaTecnicaVueling.Models;
+using Currencies_API.DataSource;
+using Currencies_API.Domain;
+using Currencies_API.Models;
 //using System.Web.Http;
 
-namespace PruebaTecnicaVueling.Controllers
+namespace Currencies_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class CurrenciesController : ControllerBase
     {
-        private readonly ILogger<CurrenciesController> _logger;
-        private DataManagerBL dataManagerBL;
-        private CurrenciesManager currenciesManager;
-        public CurrenciesController(ILogger<CurrenciesController> logger)
+        private readonly IDataManagerBL dataManagerBL;
+        private readonly ICurrenciesManager currenciesManager;
+        public CurrenciesController(IDataManagerBL dataManagerBL, ICurrenciesManager currenciesManager)
         {
-            _logger = logger;
-            generateDataManager();
+            this.dataManagerBL = dataManagerBL;
+            this.currenciesManager = currenciesManager;
+            //generateDataManager();
         }
 
-        private void generateDataManager()
-        {
-            ApiXmlClient apiProcessor = new ApiXmlClient(DataManagerXml.baseAddress);
-            XmlParser xmlParser = new XmlParser();
+        //private void generateDataManager()
+        //{
+        //    IApiXmlClient apiProcessor = new ApiXmlClient(DataManagerXml.baseAddress);
+        //    XmlParser xmlParser = new XmlParser();
 
-            DataManagerXml dataManagerXml = new DataManagerXml(apiProcessor, xmlParser);
-            dataManagerBL = new DataManagerBL(dataManagerXml);
+        //    DataManagerXml dataManagerXml = new DataManagerXml(apiProcessor, xmlParser);
+        //    dataManagerBL = new DataManagerBL(dataManagerXml);
 
-            CurrencyExchanger currencyExchanger = new CurrencyExchanger(2);
-            currenciesManager = new CurrenciesManager(currencyExchanger);
-        }
+        //    ICurrencyExchanger currencyExchanger = new CurrencyExchanger(2);
+        //    currenciesManager = new CurrenciesManager(currencyExchanger);
+        //}
 
         [HttpGet(Name = "GetExchangeRates")]
         public IEnumerable<IndividualRate> GetRates()
@@ -68,7 +68,7 @@ namespace PruebaTecnicaVueling.Controllers
             IndividualTransaction[] transactionArray = dataManagerBL.GetTransactionsFileFirst().Result.transactionArray;
             IEnumerable<IndividualTransaction> filteredTransactions = transactionArray.Where(x => x.sku == sku).ToArray();
 
-            currenciesManager.CreateDictionaryFromXMLRates(dataManagerBL.GetRates().Result);
+            currenciesManager.CreateDictionaryFromRates(dataManagerBL.GetRates().Result);
 
             result.Sku = sku;
             result.Currency = CURRENCY_TO_CONVERT;

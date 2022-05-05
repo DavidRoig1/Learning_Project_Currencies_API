@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace DataSource
 {
-    public class XmlParser
+    public class XmlParser : IParser
     {
         public T? SerializeObjectFromFile<T>(string path)
         {
@@ -35,6 +35,6 @@ namespace DataSource
             return (T?)serializer.Deserialize(stream);
         }
 
-        
+
     }
 }

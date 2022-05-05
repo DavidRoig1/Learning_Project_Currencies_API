@@ -1,6 +1,6 @@
 using DataSource;
 using NUnit.Framework;
-using PruebaTecnicaVueling.Models;
+using Currencies_API.Models;
 using System;
 
 namespace UnitTests

@@ -1,17 +1,17 @@
-﻿using PruebaTecnicaVueling.DataSource;
-using PruebaTecnicaVueling.Models;
+﻿using Currencies_API.DataSource;
+using Currencies_API.Models;
 
-namespace PruebaTecnicaVueling.Domain
+namespace Currencies_API.Domain
 {
-    public class DataManagerBL
+    public class DataManagerBL : IDataManagerBL
     {
-        DataManagerXml dataManagerXml;
+        IDataManager dataManager;
 
         private const string RATES_URI = "rates";
         private const string TRANSACTIONS_URI = "transactions";
-        public DataManagerBL(DataManagerXml dataManagerXml)
+        public DataManagerBL(IDataManager dataManager)
         {
-            this.dataManagerXml = dataManagerXml;
+            this.dataManager = dataManager;
         }
 
         public async Task<RatesBase?> GetRates()
@@ -83,7 +83,7 @@ namespace PruebaTecnicaVueling.Domain
             T? data = default(T?);
             try
             {
-                data = await dataManagerXml.getDataAndStoreDataFromApi<T>(uri);
+                data = await dataManager.getDataAndStoreDataFromApi<T>(uri);
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace PruebaTecnicaVueling.Domain
             T? data = default(T?);
             try
             {
-                data = dataManagerXml.getDataFromStoredFile<T>(uri);
+                data = dataManager.getDataFromStoredFile<T>(uri);
             }
             catch (Exception ex)
             {

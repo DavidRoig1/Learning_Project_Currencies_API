@@ -1,5 +1,5 @@
 ﻿
-namespace PruebaTecnicaVueling.Models
+namespace Currencies_API.Models
 {
 
     [System.SerializableAttribute()]

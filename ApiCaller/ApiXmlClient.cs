@@ -2,13 +2,13 @@
 
 namespace ApiCaller
 {
-    public class ApiXmlClient
+    public class ApiXmlClient : IApiXmlClient
     {
         /// <summary>
         /// This client is static because it is able to support concurrent calls
         /// and is thread safe. Therefore there is no need to create multiple clients
         /// </summary>
-        private static HttpClient? apiClient { get; set; }
+        private static HttpClient apiClient { get; set; }
 
         public ApiXmlClient(string? baseAddress = null)
         {
@@ -17,7 +17,7 @@ namespace ApiCaller
                 apiClient = new HttpClient();
                 apiClient.DefaultRequestHeaders.Accept.Clear();
                 apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-                if(baseAddress != null)
+                if (baseAddress != null)
                     apiClient.BaseAddress = new Uri(baseAddress);
             }
         }

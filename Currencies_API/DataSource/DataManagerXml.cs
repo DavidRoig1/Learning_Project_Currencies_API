@@ -1,17 +1,17 @@
 ﻿using ApiCaller;
 using DataSource;
 
-namespace PruebaTecnicaVueling.DataSource
+namespace Currencies_API.DataSource
 {
-    public class DataManagerXml
+    public class DataManagerXml : IDataManager
     {
         public const string baseAddress = "http://quiet-stone-2094.herokuapp.com/";
 
         private readonly string folderName = $"{Environment.CurrentDirectory}/files";
-        private readonly ApiXmlClient apiProcessor;
-        private readonly XmlParser xmlParser;
+        private readonly IApiXmlClient apiProcessor;
+        private readonly IParser xmlParser;
 
-        public DataManagerXml(ApiXmlClient apiProcessor, XmlParser xmlParser)
+        public DataManagerXml(IApiXmlClient apiProcessor, IParser xmlParser)
         {
             this.apiProcessor = apiProcessor;
             this.xmlParser = xmlParser;
@@ -20,14 +20,14 @@ namespace PruebaTecnicaVueling.DataSource
         public async Task<T?> getDataAndStoreDataFromApi<T>(string uri)
         {
             T? result = default(T?);
-               
+
             using (Stream? xmlStream = await apiProcessor.GetXmlStreamFromUrl(uri))
             {
                 if (xmlStream != null)
                 {
                     result = xmlParser.SerializeFromStream<T>(xmlStream);
                     storeStreamAsFile(xmlStream, uri);
-                } 
+                }
             }
 
             return result;

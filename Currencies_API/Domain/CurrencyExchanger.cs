@@ -1,19 +1,13 @@
-﻿namespace PruebaTecnicaVueling.Domain
+﻿namespace Currencies_API.Domain
 {
-    public class CurrencyExchanger
+    public class CurrencyExchanger : ICurrencyExchanger
     {
-        private uint maxDecimals;
-        public CurrencyExchanger(uint maxDecimals)
-        {
-            this.maxDecimals = maxDecimals;
-        }
-
         public decimal ExchangeCurrency(decimal amount, decimal rate)
         {
             return (amount * rate);
         }
 
-        public decimal RoundHalfToEven(decimal numberToRound)
+        public decimal RoundHalfToEven(decimal numberToRound, uint maxDecimals)
         {
             return Math.Round(numberToRound, (int)maxDecimals, MidpointRounding.ToEven);
         }

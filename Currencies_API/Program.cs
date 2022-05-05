@@ -8,17 +8,11 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
-    //builder.Services.AddSingleton<>
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
     builder.Host.UseNLog();
 
-    builder.Services.AddControllers().AddXmlDataContractSerializerFormatters();
-    
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    Currencies_API.DependeciesContainer.DeclareDependencies(builder.Services);
 
     var app = builder.Build();
 
@@ -26,7 +20,10 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(options =>
+        {
+            options.EnableTryItOutByDefault();
+        });
     }
 
     app.UseHttpsRedirection();

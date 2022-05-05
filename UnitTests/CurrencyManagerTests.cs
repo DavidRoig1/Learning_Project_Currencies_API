@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
-using PruebaTecnicaVueling.Domain;
-using PruebaTecnicaVueling.Models;
+using Currencies_API.Domain;
+using Currencies_API.Models;
 using System.Collections.Generic;
 
 namespace UnitTests
@@ -18,7 +18,7 @@ namespace UnitTests
         public void CreateDictionaryFromValidRatesTest()
         {
             RatesBase rates = mockValidRates();
-            currencyManager.CreateDictionaryFromXMLRates(rates);
+            currencyManager.CreateDictionaryFromRates(rates);
 
             Dictionary<string, Dictionary<string, decimal>> dictionary;
             dictionary = currencyManager.ExchangeRatesDictionary;
@@ -46,7 +46,7 @@ namespace UnitTests
         public void CreateDictionaryFromInvalidRatesTest()
         {
             RatesBase rates = mockInvalidRates();
-            currencyManager.CreateDictionaryFromXMLRates(rates);
+            currencyManager.CreateDictionaryFromRates(rates);
 
             Assert.Zero(currencyManager.ExchangeRatesDictionary.Count);
         }
@@ -55,7 +55,7 @@ namespace UnitTests
         public void CreateDictionaryNullRates()
         {
             RatesBase rates = null;
-            currencyManager.CreateDictionaryFromXMLRates(rates);
+            currencyManager.CreateDictionaryFromRates(rates);
 
             Assert.Zero(currencyManager.ExchangeRatesDictionary.Count);
         }
@@ -64,7 +64,7 @@ namespace UnitTests
         public void CreateDictionaryEmptyRates()
         {
             RatesBase rates = new RatesBase();
-            currencyManager.CreateDictionaryFromXMLRates(rates);
+            currencyManager.CreateDictionaryFromRates(rates);
 
             Assert.Zero(currencyManager.ExchangeRatesDictionary.Count);
         }

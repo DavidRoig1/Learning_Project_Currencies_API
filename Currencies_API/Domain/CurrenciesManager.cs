@@ -1,12 +1,12 @@
-﻿using PruebaTecnicaVueling.Models;
+﻿using Currencies_API.Models;
 
-namespace PruebaTecnicaVueling.Domain
+namespace Currencies_API.Domain
 {
-    public class CurrenciesManager
+    public class CurrenciesManager : ICurrenciesManager
     {
-        private readonly ILogger<CurrencyExchanger> logger;
+        private readonly ILogger<ICurrencyExchanger> logger;
 
-        private readonly CurrencyExchanger currencyExchanger;
+        private readonly ICurrencyExchanger currencyExchanger;
 
         private readonly (string currency, decimal amount) NO_TRANSACTION = (string.Empty, decimal.MinValue);
 
@@ -21,7 +21,7 @@ namespace PruebaTecnicaVueling.Domain
         public Dictionary<string, Dictionary<string, decimal>> ExchangeRatesDictionary;
 
 
-        public CurrenciesManager(CurrencyExchanger currencyExchanger)
+        public CurrenciesManager(ICurrencyExchanger currencyExchanger)
         {
             this.currencyExchanger = currencyExchanger;
         }
@@ -41,7 +41,7 @@ namespace PruebaTecnicaVueling.Domain
                 result = ExchangeCurrenciesIndirectly(currencyFrom, currencyTo, amount);
             }
 
-            return currencyExchanger.RoundHalfToEven(result);
+            return currencyExchanger.RoundHalfToEven(result,2);
         }
 
         // Cambiar metodo a generar path de conversiones
@@ -59,7 +59,7 @@ namespace PruebaTecnicaVueling.Domain
                 currenciesStack.Push(item.Key);
             }
             checkedCurrencies.Add(currencyFrom);
-            
+
             // Calculate conversion path
             while (currenciesStack.Count > 0)
             {
@@ -76,7 +76,7 @@ namespace PruebaTecnicaVueling.Domain
                         break;
                     }
 
-                    if(currentSons.Count > 0)
+                    if (currentSons.Count > 0)
                     {
                         foreach (var grandchildren in currentSons)
                         {
@@ -87,7 +87,7 @@ namespace PruebaTecnicaVueling.Domain
                             }
                         }
                     }
-                    if(addedKeys == 0)
+                    if (addedKeys == 0)
                     {
                         currentCurrenciesPath.Clear();
                     }
@@ -98,13 +98,13 @@ namespace PruebaTecnicaVueling.Domain
                 }
             }
 
-            if(currentCurrenciesPath.Count > 0)
+            if (currentCurrenciesPath.Count > 0)
             {
                 currentCurrenciesPath.Enqueue(currencyTo);
                 List<string> list = currentCurrenciesPath.ToList();
                 list.Insert(0, currencyFrom);
                 result = amount;
-                
+
                 for (int i = 1; i < list.Count; i++)
                 {
                     decimal rateToExchange = ExchangeRatesDictionary[list[i - 1]][list[i]];
@@ -115,7 +115,7 @@ namespace PruebaTecnicaVueling.Domain
             return result;
         }
 
-        public Dictionary<string, Dictionary<string, decimal>> CreateDictionaryFromXMLRates(RatesBase rates)
+        public Dictionary<string, Dictionary<string, decimal>> CreateDictionaryFromRates(RatesBase rates)
         {
             ExchangeRatesDictionary = new Dictionary<string, Dictionary<string, decimal>>();
 
