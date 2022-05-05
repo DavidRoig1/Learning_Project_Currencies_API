@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rates>
+  <rate from="CAD" to="AUD" rate="0.67"/>
+  <rate from="AUD" to="CAD" rate="1.49"/>
+  <rate from="CAD" to="USD" rate="1.12"/>
+  <rate from="USD" to="CAD" rate="0.89"/>
+  <rate from="AUD" to="EUR" rate="1.25"/>
+  <rate from="EUR" to="AUD" rate="0.8"/>
+</rates>

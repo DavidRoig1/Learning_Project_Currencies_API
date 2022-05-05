@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transactions>
+  <transaction amount="33.4" currency="CAD"/>
+  <transaction sku="A6599" currency="USD"/>
+  <transaction sku="B0144" amount="18.9" />
+  <transaction />
+  <transaction sku="B0144" amount="23.2" currency="USD" unexpectedAttr="test"/>
+	<transaction sku="T2618" amount="33.2" currency="USD">
+		<unexpectedChild>Test</unexpectedChild>
+	</transaction>
+</transactions>
