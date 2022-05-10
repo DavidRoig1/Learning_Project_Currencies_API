@@ -2,7 +2,7 @@
 
 namespace ApiCaller
 {
-    public class ApiXmlClient : IApiXmlClient
+    public class ApiXmlClient : IApiClient
     {
         /// <summary>
         /// This client is static because it is able to support concurrent calls
@@ -22,7 +22,7 @@ namespace ApiCaller
             }
         }
 
-        public async Task<Stream> GetXmlStreamFromUrl(string relativeUri)
+        public async Task<Stream> GetStreamFromUrl(string relativeUri)
         {
             //This call is not inside a using because that would close the stream before it can be 
             //returned;

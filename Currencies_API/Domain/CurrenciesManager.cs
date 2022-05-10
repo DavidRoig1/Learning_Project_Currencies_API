@@ -4,7 +4,7 @@ namespace Currencies_API.Domain
 {
     public class CurrenciesManager : ICurrenciesManager
     {
-        private readonly ILogger<ICurrencyExchanger> logger;
+        private readonly ILogger<CurrenciesManager> logger;
 
         private readonly ICurrencyExchanger currencyExchanger;
 
@@ -21,9 +21,10 @@ namespace Currencies_API.Domain
         public Dictionary<string, Dictionary<string, decimal>> ExchangeRatesDictionary;
 
 
-        public CurrenciesManager(ICurrencyExchanger currencyExchanger)
+        public CurrenciesManager(ICurrencyExchanger currencyExchanger, ILogger<CurrenciesManager> logger)
         {
             this.currencyExchanger = currencyExchanger;
+            this.logger = logger;
         }
 
         public decimal ExchangeCurrency(string currencyFrom, string currencyTo, decimal amount)
@@ -118,7 +119,6 @@ namespace Currencies_API.Domain
         public Dictionary<string, Dictionary<string, decimal>> CreateDictionaryFromRates(RatesBase rates)
         {
             ExchangeRatesDictionary = new Dictionary<string, Dictionary<string, decimal>>();
-
             try
             {
                 foreach (IndividualRate singleRate in rates.RateArray)

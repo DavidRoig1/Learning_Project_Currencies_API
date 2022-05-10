@@ -8,10 +8,10 @@ namespace Currencies_API.DataSource
         public const string baseAddress = "http://quiet-stone-2094.herokuapp.com/";
 
         private readonly string folderName = $"{Environment.CurrentDirectory}/files";
-        private readonly IApiXmlClient apiProcessor;
+        private readonly IApiClient apiProcessor;
         private readonly IParser xmlParser;
 
-        public DataManagerXml(IApiXmlClient apiProcessor, IParser xmlParser)
+        public DataManagerXml(IApiClient apiProcessor, IParser xmlParser)
         {
             this.apiProcessor = apiProcessor;
             this.xmlParser = xmlParser;
@@ -21,7 +21,7 @@ namespace Currencies_API.DataSource
         {
             T? result = default(T?);
 
-            using (Stream? xmlStream = await apiProcessor.GetXmlStreamFromUrl(uri))
+            using (Stream? xmlStream = await apiProcessor.GetStreamFromUrl(uri))
             {
                 if (xmlStream != null)
                 {

@@ -1,9 +1,8 @@
-﻿using ApiCaller;
-using DataSource;
-using Microsoft.AspNetCore.Mvc;
-using Currencies_API.DataSource;
-using Currencies_API.Domain;
+﻿using Currencies_API.Domain;
 using Currencies_API.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
 //using System.Web.Http;
 
 namespace Currencies_API.Controllers
@@ -14,24 +13,13 @@ namespace Currencies_API.Controllers
     {
         private readonly IDataManagerBL dataManagerBL;
         private readonly ICurrenciesManager currenciesManager;
-        public CurrenciesController(IDataManagerBL dataManagerBL, ICurrenciesManager currenciesManager)
+        private readonly ILogger<CurrenciesController> logger;
+        public CurrenciesController(IDataManagerBL dataManagerBL, ICurrenciesManager currenciesManager, ILogger<CurrenciesController> logger)
         {
             this.dataManagerBL = dataManagerBL;
             this.currenciesManager = currenciesManager;
-            //generateDataManager();
+            this.logger = logger;
         }
-
-        //private void generateDataManager()
-        //{
-        //    IApiXmlClient apiProcessor = new ApiXmlClient(DataManagerXml.baseAddress);
-        //    XmlParser xmlParser = new XmlParser();
-
-        //    DataManagerXml dataManagerXml = new DataManagerXml(apiProcessor, xmlParser);
-        //    dataManagerBL = new DataManagerBL(dataManagerXml);
-
-        //    ICurrencyExchanger currencyExchanger = new CurrencyExchanger(2);
-        //    currenciesManager = new CurrenciesManager(currencyExchanger);
-        //}
 
         [HttpGet(Name = "GetExchangeRates")]
         public IEnumerable<IndividualRate> GetRates()

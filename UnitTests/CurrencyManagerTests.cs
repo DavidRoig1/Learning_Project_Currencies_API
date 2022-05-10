@@ -2,16 +2,21 @@
 using Currencies_API.Domain;
 using Currencies_API.Models;
 using System.Collections.Generic;
+using Moq;
+using Microsoft.Extensions.Logging;
 
 namespace UnitTests
 {
     public class CurrencyManagerTests
     {
         CurrenciesManager currencyManager;
+        Mock<ICurrencyExchanger> exchangerMock = new Mock<ICurrencyExchanger>();
+        Mock<ILogger<CurrenciesManager>> loggerMock = new Mock<ILogger<CurrenciesManager>>();
 
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
+            currencyManager = new CurrenciesManager(exchangerMock.Object,loggerMock.Object);
         }
 
         [Test]
@@ -40,6 +45,7 @@ namespace UnitTests
             Assert.AreEqual(dictionary["USD"].Count, 2);
             Assert.AreEqual(dictionary["EUR"].Count, 1);
             Assert.AreEqual(dictionary["CAD"].Count, 1);
+
         }
 
         [Test]

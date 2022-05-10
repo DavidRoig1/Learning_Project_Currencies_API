@@ -15,7 +15,7 @@ namespace Currencies_API
             serviceDescriptors.AddEndpointsApiExplorer();
 
 
-            serviceDescriptors.AddScoped<IApiXmlClient, ApiXmlClient>();
+            serviceDescriptors.AddScoped<IApiClient, ApiXmlClient>();
             serviceDescriptors.AddScoped<IParser, XmlParser>();
             serviceDescriptors.AddScoped<IDataManager,DataManagerXml>();
             serviceDescriptors.AddScoped<IDataManagerBL, DataManagerBL>();
